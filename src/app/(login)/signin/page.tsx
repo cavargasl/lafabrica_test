@@ -53,8 +53,8 @@ const SignInPage = () => {
         router.push("/dashboard");
       }
     } catch (error) {
-      console.error("Error al iniciar sesión con email y contraseña:", error);
-      toast.error("Error al iniciar sesión con email y contraseña");
+      console.error("Error to sign in with email and password:", error);
+      toast.error("Error to sign in with email and password");
     } finally {
       setLoading(false);
     }
@@ -68,8 +68,8 @@ const SignInPage = () => {
       dispatch(setUser(user));
       router.push("/dashboard");
     } catch (error) {
-      console.error("Error al iniciar sesión con Google:", error);
-      toast.error("Error al iniciar sesión con Google");
+      console.error("Error to sign in with Google:", error);
+      toast.error("Error to sign in with Google");
     } finally {
       setLoading(false);
     }

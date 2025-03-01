@@ -40,8 +40,8 @@ export default function SignUpPage() {
       dispatch(setUser(user));
       router.push("/dashboard");
     } catch (error) {
-      console.error("Error al registrar el usuario:", error);
-      toast.error("Error al registrar el usuario");
+      console.error("Error to create user:", error);
+      toast.error("Error to create user");
     } finally {
       setLoading(false);
     }
@@ -55,8 +55,8 @@ export default function SignUpPage() {
       dispatch(setUser(user));
       router.push("/dashboard");
     } catch (error) {
-      console.error("Error al iniciar sesión con Google:", error);
-      toast.error("Error al iniciar sesión con Google");
+      console.error("Error to sign in with Google:", error);
+      toast.error("Error to sign in with Google");
     } finally {
       setLoading(false);
     }
