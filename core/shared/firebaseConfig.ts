@@ -1,6 +1,6 @@
+import { env } from "@/config/env.mjs";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { env } from "./config/env.mjs";
 
 const firebaseConfig = {
   apiKey: env.NEXT_PUBLIC_FIREBASE_API_KEY,

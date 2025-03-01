@@ -7,8 +7,6 @@ export const env = createEnv({
   },
 
   client: {
-    NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
-
     NEXT_PUBLIC_FIREBASE_API_KEY: z.string(),
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: z.string(),
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: z.string(),
