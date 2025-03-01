@@ -2,8 +2,10 @@ import { auth } from "@/core/shared/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { IUserRepository } from "../domain/UserRepository";
@@ -28,5 +30,18 @@ export const FirebaseUserRepository = (): IUserRepository => ({
   signInWithGoogle: async () => {
     const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
     return UserAdapter(userCredential.user);
+  },
+  getCurrentUser: async () => {
+    const user = auth.currentUser;
+    if (user) return UserAdapter(user);
+    
+    return new Promise((resolve) => {
+      onAuthStateChanged(auth, (user) => {
+        resolve(user ? UserAdapter(user) : null);
+      });
+    });
+  },
+  signOut: async () => {
+    await signOut(auth);
   },
 });

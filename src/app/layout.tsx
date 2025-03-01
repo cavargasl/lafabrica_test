@@ -4,6 +4,7 @@ import "./globals.css";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import { ReduxProvider } from "@/store/ReduxProvider";
 import { Toaster } from "@/components/ui/sonner";
+import AuthLoader from "./components/AuthLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <AuthLoader />
+          {children}
+          </ReduxProvider>
         <Toaster />
         <TailwindIndicator />
       </body>

@@ -25,6 +25,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { UserService } from "@/core/auth/application/UserService";
+import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
+import { useDispatch } from "react-redux";
+import { clearUser } from "@/store/slices/userSlice";
 
 export function NavUser({
   user,
@@ -36,6 +40,13 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const dispatch = useDispatch()
+
+  const signOut = () => {
+    const userService = UserService(FirebaseUserRepository());
+    userService.signOut();
+    dispatch(clearUser());
+  };
 
   return (
     <SidebarMenu>
@@ -102,7 +113,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>
