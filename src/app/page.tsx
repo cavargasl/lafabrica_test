@@ -1,3 +1,4 @@
+import Logo from "@/components/logo";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,17 +31,12 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
-  
-
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navbar */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <QrCode className="h-6 w-6" />
-            <span className="text-xl font-bold">QR Code Manager</span>
-          </div>
+        <div className="container flex h-16 items-center justify-between py-4">
+        <Logo />
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="#"
@@ -63,10 +59,10 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-2">
             <Button variant="ghost" asChild>
-              <Link href="#">Sign In</Link>
+              <Link href="/signup">Sign In</Link>
             </Button>
             <Button asChild>
-              <Link href="#">Sign Up</Link>
+              <Link href="/signup">Sign Up</Link>
             </Button>
           </div>
         </div>
@@ -74,8 +70,8 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className=" container mx-auto w-full py-12 md:py-24 lg:py-32 xl:py-48">
-          <div className="container px-4 md:px-6">
+        <section className=" container w-full py-12 md:py-24 lg:py-32 xl:py-48">
+          <div className="container">
             <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
@@ -96,7 +92,7 @@ export default function LandingPage() {
                   </Button>
                 </div>
               </div>
-              <div className="mx-auto w-full max-w-[600px] lg:max-w-none">
+              <div className=" w-full max-w-[600px] lg:max-w-none">
                 <div className="aspect-video overflow-hidden rounded-xl">
                   <LucideImage className="w-full h-full object-cover opacity-5 bg-gray-400" />
                 </div>
@@ -107,7 +103,7 @@ export default function LandingPage() {
 
         {/* Features Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/40">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="container">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col items-center space-y-4 rounded-lg p-6 text-center">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
@@ -145,7 +141,7 @@ export default function LandingPage() {
 
         {/* Testimonials Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="container">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -157,17 +153,25 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
+            <div className=" grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
               {testimonials.map((testimonial, index) => (
-                <div key={index} className="flex flex-col justify-between rounded-lg border bg-card p-6 shadow-sm">
+                <div
+                  key={index}
+                  className="flex flex-col justify-between rounded-lg border bg-card p-6 shadow-sm"
+                >
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
                       <Avatar className="bg-chart-3 flex items-center justify-center">
-                        <AvatarFallback>{testimonial.name.charAt(0)+testimonial.name.split(" ")[1].charAt(0)}</AvatarFallback>
+                        <AvatarFallback>
+                          {testimonial.name.charAt(0) +
+                            testimonial.name.split(" ")[1].charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
                         <h3 className="font-semibold">{testimonial.name}</h3>
-                        <p className="text-sm text-muted-foreground">{testimonial.date}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.date}
+                        </p>
                       </div>
                     </div>
                     <div className="flex text-yellow-500">
@@ -187,7 +191,7 @@ export default function LandingPage() {
 
         {/* Newsletter Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/40">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="container">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
@@ -216,7 +220,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="w-full border-t py-6">
-        <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
+        <div className="container flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
             <QrCode className="h-6 w-6" />
             <p className="text-sm text-muted-foreground">
@@ -326,7 +330,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto mt-8 flex flex-col items-center justify-between gap-4 border-t py-4 md:h-16 md:flex-row">
+        <div className="container mt-8 flex flex-col items-center justify-between gap-4 border-t py-4 md:h-16 md:flex-row">
           <div className="text-center text-sm text-muted-foreground md:text-left">
             Made with ❤️ by QR Code Manager Team
           </div>
