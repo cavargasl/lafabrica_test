@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { useForm } from "react-hook-form";
 
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
@@ -16,20 +17,39 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
+import { UserService } from "@/core/auth/application/UserService";
+import { IUserCreate } from "@/core/auth/domain/User";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/slices/userSlice";
+import { toast } from "sonner"
 
 export default function SignUpPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors } } = useForm<IUserCreate>({});
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Aquí iría la lógica de registro
-    console.log("Formulario enviado");
-    router.push("/dashboard"); // Redirige al dashboard después del registro
+  const onSubmit = async (data: { email: string; password: string; name: string }) => {
+    try {
+      const userService = UserService(FirebaseUserRepository());
+      const user = await userService.createUserWithEmailAndPassword(data);
+      dispatch(setUser(user));
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error al registrar el usuario:", error);
+      toast.error("Error al registrar el usuario");
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    // Aquí iría la lógica de autenticación con Google
-    console.log("Iniciando sesión con Google");
+  const handleGoogleSignIn = async () => {
+    /* const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      console.log("Iniciado sesión con Google");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error al iniciar sesión con Google:", error);
+    } */
   };
 
   return (
@@ -49,7 +69,7 @@ export default function SignUpPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-2">
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="name">
@@ -61,8 +81,10 @@ export default function SignUpPage() {
                   type="text"
                   autoCapitalize="none"
                   autoCorrect="off"
-                  required
+                  {...register("name", { required: true })}
+                  className={errors.name ? "border-error" : ""}
                 />
+                {errors.name && <span className="text-error">Name is required</span>}
               </div>
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="email">
@@ -75,8 +97,10 @@ export default function SignUpPage() {
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect="off"
-                  required
+                  {...register("email", { required: true })}
+                  className={errors.email ? "border-error" : ""}
                 />
+                {errors.email && <span className="text-error">Email is required</span>}
               </div>
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="password">
@@ -88,8 +112,10 @@ export default function SignUpPage() {
                   type="password"
                   autoCapitalize="none"
                   autoCorrect="off"
-                  required
+                  {...register("password", { required: true })}
+                  className={errors.password ? "border-error" : ""}
                 />
+                {errors.password && <span className="text-error">Password is required</span>}
               </div>
               <Button className="w-full" type="submit">
                 Sign Up
