@@ -35,12 +35,28 @@ const SignInPage = () => {
     setIsGuest(!isGuest);
   };
 
-  const onSubmit = (data: IUserSignIn) => {
-    if (isGuest) {
-      console.log("Ingresando como invitado");
-    } else {
-      // Lógica de inicio de sesión con email y contraseña
-      console.log("Iniciando sesión con email y contraseña", data);
+  const onSubmit = async (data: IUserSignIn) => {
+    setLoading(true);
+    try {
+      if (isGuest) {
+        const fakeUser = {
+          id: "guest",
+          email: "guest@example.com",
+          name: "Guest User",
+        };
+        dispatch(setUser(fakeUser));
+        router.push("/dashboard");
+      } else {
+        const userService = UserService(FirebaseUserRepository());
+        const user = await userService.signInWithEmailAndPassword(data);
+        dispatch(setUser(user));
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión con email y contraseña:", error);
+      toast.error("Error al iniciar sesión con email y contraseña");
+    } finally {
+      setLoading(false);
     }
   };
 
