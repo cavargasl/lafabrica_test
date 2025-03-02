@@ -25,10 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { UserService } from "@/core/auth/application/UserService";
-import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
-import { useDispatch } from "react-redux";
-import { clearUser } from "@/store/slices/userSlice";
+import { useClerk } from "@clerk/nextjs";
 
 export function NavUser({
   user,
@@ -40,13 +37,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const dispatch = useDispatch()
-
-  const signOut = () => {
-    const userService = UserService(FirebaseUserRepository());
-    userService.signOut();
-    dispatch(clearUser());
-  };
+  const { signOut } = useClerk();
 
   return (
     <SidebarMenu>
@@ -92,28 +83,28 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem disabled>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem disabled>
                 <User />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem disabled>
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem disabled>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut}>
+            <DropdownMenuItem onClick={() => signOut()}>
               <LogOut />
               Log out
             </DropdownMenuItem>

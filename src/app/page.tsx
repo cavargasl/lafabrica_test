@@ -2,6 +2,8 @@ import Logo from "@/components/logo";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import {
   FolderKanban,
@@ -30,13 +32,15 @@ const testimonials = [
   },
 ];
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { userId } = await auth();
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navbar */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between py-4">
-        <Logo />
+          <Logo />
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="#"
@@ -58,12 +62,24 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" asChild>
-              <Link href="/signup">Sign In</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">Sign Up</Link>
-            </Button>
+            {userId ? (
+              <Button asChild>
+                <Link
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Link>
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <SignInButton />
+                </Button>
+                <Button asChild>
+                  <SignUpButton />
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -161,7 +177,7 @@ export default function LandingPage() {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <Avatar className="bg-chart-3 flex items-center justify-center">
+                      <Avatar className="bg-secondary flex items-center justify-center">
                         <AvatarFallback>
                           {testimonial.name.charAt(0) +
                             testimonial.name.split(" ")[1].charAt(0)}

@@ -1,24 +1,24 @@
 "use client";
-import { UserService } from "@/core/auth/application/UserService";
-import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
 import { setUser } from "@/store/slices/userSlice";
+import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function AuthLoader() {
   const dispatch = useDispatch();
+  const { user, isLoaded } = useUser();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userService = UserService(FirebaseUserRepository());
-      const currentUser = await userService.getCurrentUser();
-      if (currentUser) {
-        dispatch(setUser(currentUser));
-      }
-    };
-
-    fetchUser();
-  }, [dispatch]);
+    if (isLoaded && user) {
+      dispatch(
+        setUser({
+          id: user.id,
+          email: user.emailAddresses[0].emailAddress,
+          name: user.firstName + " " + user.lastName,
+        })
+      );
+    }
+  }, [isLoaded, user, dispatch]);
 
   return null;
 }

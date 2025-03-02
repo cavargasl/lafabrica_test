@@ -1,10 +1,11 @@
+import { TailwindIndicator } from "@/components/TailwindIndicator";
+import { Toaster } from "@/components/ui/sonner";
+import { ReduxProvider } from "@/store/ReduxProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { TailwindIndicator } from "@/components/TailwindIndicator";
-import { ReduxProvider } from "@/store/ReduxProvider";
-import { Toaster } from "@/components/ui/sonner";
 import AuthLoader from "./components/AuthLoader";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,17 +28,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ReduxProvider>
-          <AuthLoader />
-          {children}
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ReduxProvider>
+            <AuthLoader />
+            {children}
           </ReduxProvider>
-        <Toaster />
-        <TailwindIndicator />
-      </body>
-    </html>
+          <Toaster />
+          <TailwindIndicator />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

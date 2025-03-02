@@ -23,6 +23,7 @@ import {
   QrCode,
   User,
 } from "lucide-react";
+import Link from "next/link";
 import { useSelector } from "react-redux";
 import { NavUser } from "./NavUser";
 
@@ -49,11 +50,13 @@ const data = {
       title: "Account",
       url: "#",
       icon: User,
+      disabled: true,
     },
     {
       title: "Billing",
       url: "#",
       icon: CreditCard,
+      disabled: true,
     },
   ],
   extraNav: [
@@ -61,11 +64,13 @@ const data = {
       title: "Contact Us",
       url: "#",
       icon: MessageCircleMore,
+      disabled: true,
     },
     {
       title: "FAQs",
       url: "#",
       icon: MessageCircleQuestion,
+      disabled: true,
     },
   ],
 };
@@ -106,10 +111,10 @@ export default function DashboardSidebar() {
             {data.userNav.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                  <Link href={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -121,10 +126,10 @@ export default function DashboardSidebar() {
             {data.extraNav.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                  <Link href={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
