@@ -1,10 +1,10 @@
 import {
-  addDoc,
   collection,
   db,
   doc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from "@/core/shared/firebaseConfig";
@@ -24,15 +24,15 @@ export const FirestoreUserDataRepository: IUserDataRepository = {
     const userData = querySnapshot.docs[0].data() as IUserData;
     return userData;
   },
-  createUserData: async (userData: Omit<IUserData, "id">) => {
+  createUserData: async (userData: IUserData) => {
     const userCollection = collection(db, "users");
-    const newUserDoc = await addDoc(userCollection, { ...userData });
-
-    return { ...userData, id: newUserDoc.id };
+    const userDocRef = await doc(userCollection, userData.userId);
+    await setDoc(userDocRef, { ...userData });
+    return { ...userData };
   },
   updateUserData: async (userData: IUserData) => {
     const userCollection = collection(db, "users");
-    const userDoc = doc(userCollection, userData.id);
+    const userDoc = doc(userCollection, userData.userId);
     await updateDoc(userDoc, { ...userData });
     return userData;
   },

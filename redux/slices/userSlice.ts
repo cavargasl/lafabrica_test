@@ -1,9 +1,9 @@
-import { IUser } from '@/core/auth/domain/User';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { IUserData } from "@/core/userData/domain/userData";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 interface UserState {
-  user: IUser | null;
+  user: IUserData | null;
 }
 
 const initialState: UserState = {
@@ -11,10 +11,10 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<IUser>) {
+    setUser(state, action: PayloadAction<IUserData>) {
       state.user = action.payload;
     },
     clearUser(state) {
