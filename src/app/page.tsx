@@ -5,13 +5,8 @@ import { Input } from "@/components/ui/input";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import {
-  FolderKanban,
-  Image as LucideImage,
-  Palette,
-  QrCode,
-  Star,
-} from "lucide-react";
+import { FolderKanban, Palette, QrCode, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const testimonials = [
@@ -64,11 +59,7 @@ export default async function LandingPage() {
           <div className="flex items-center gap-2">
             {userId ? (
               <Button asChild>
-                <Link
-                  href="/dashboard"
-                >
-                  Dashboard
-                </Link>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
             ) : (
               <>
@@ -88,7 +79,7 @@ export default async function LandingPage() {
         {/* Hero Section */}
         <section className=" container w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px]">
+            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] items-center">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
@@ -108,10 +99,14 @@ export default async function LandingPage() {
                   </Button>
                 </div>
               </div>
-              <div className=" w-full max-w-[600px] lg:max-w-none">
-                <div className="aspect-video overflow-hidden rounded-xl">
-                  <LucideImage className="w-full h-full object-cover opacity-5 bg-gray-400" />
-                </div>
+              <div className="aspect-video max-w-[600px] relative">
+                <Image
+                  src="/banner_qr.png"
+                  alt="QR Code Manager"
+                  fill
+                  className="object-cover overflow-hidden rounded-xl"
+                  priority
+                />
               </div>
             </div>
           </div>
