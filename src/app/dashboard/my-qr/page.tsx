@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Input } from "@/components/ui/input";
@@ -9,13 +9,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { QRCodeService } from "@/core/qrCodes/application/qrCodeService";
+import { FirebaseQrCodeRepository } from "@/core/qrCodes/infrastructure/FirebaseQrCodeRepository";
+import { auth } from "@clerk/nextjs/server";
 import { FolderPlus, Plus } from "lucide-react";
+import { redirect } from "next/navigation";
 import { DashboardHeader } from "../components/DashboardHeader";
 import { DashboardShell } from "../components/DashboardShell";
 import FolderSection from "./components/FolderSection";
 import QRList from "./components/QRList";
+import Link from "next/link";
 
-export default function MyQRPage() {
+const qrCodeService = QRCodeService(FirebaseQrCodeRepository);
+export default async function MyQRPage() {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/signin");
+  }
+
+  const qrCodes = await qrCodeService.getAllQRCodeByUserId(userId);
+  if (qrCodes.length === 0) {
+    qrCodes.push({
+      id: "test_id_1",
+      type: "url",
+      name: "Portfolio",
+      createdAt: "Mar 1, 2025",
+      updatedAt: "Mar 2, 2025",
+      userId: "test_user_id_1",
+      description: "Portfolio description",
+      data: "https://qrweb.co/ox9u",
+      imageUrl: "https://qrweb.co/ox9u",
+      scans: 0,
+      folder: undefined,
+    });
+  }
+
   return (
     <DashboardShell>
       <DashboardHeader heading="My QR Codes">
@@ -24,10 +52,13 @@ export default function MyQRPage() {
             <FolderPlus className="h-4 w-4" />
             <span className="hidden md:block">New Folder</span>
           </Button>
-          <Button>
+          <Link
+            href="/dashboard/qr-code"
+            className={buttonVariants()}
+          >
             <Plus className="h-4 w-4" />
             <span className="hidden md:block">Create New QR Code</span>
-          </Button>
+          </Link>
         </div>
       </DashboardHeader>
 
@@ -105,7 +136,7 @@ export default function MyQRPage() {
       </div>
 
       {/* QR Codes List */}
-      <QRList />
+      <QRList qrCodes={qrCodes} />
 
       {/* Pagination */}
       <div className="flex items-center justify-between">

@@ -30,7 +30,6 @@ export default function CreateQRCodePage() {
   const { user } = useUser();
 
   const onSubmit = async (data: IQRCode) => {
-    console.log(user, data);
     if (!user) {
       console.error("User not found");
       return;

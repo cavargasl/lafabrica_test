@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { IQRCode } from "@/core/qrCodes/domain/qrCode";
+import { formatDate } from "@/lib/utils";
 import {
   Copy,
   Download,
@@ -20,23 +21,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const qrCodes: IQRCode[] = [
-  {
-    id: "test_id_1",
-    type: "url",
-    name: "Portfolio",
-    createdAt: "Mar 1, 2025",
-    updatedAt: "Mar 2, 2025",
-    userId: "test_user_id_1",
-    description: "Portfolio description",
-    data: "https://qrweb.co/ox9u",
-    imageUrl: "https://qrweb.co/ox9u",
-    scans: 0,
-    folder: undefined,
-  },
-];
-
-export default function QRList() {
+interface QRListProps {
+  qrCodes: IQRCode[];
+}
+export default function QRList({ qrCodes }: QRListProps) {
   return (
     <div className="space-y-4">
       {qrCodes.map((qr) => (
@@ -58,14 +46,14 @@ export default function QRList() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold">{qr.name}</h3>
+                  <h3 className="font-semibold capitalize">{qr.name}</h3>
                   <Button variant="outline" size="icon">
                     <Edit2 className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="space-y-1 text-sm text-muted-foreground">
-                  <p>Created: {qr.createdAt}</p>
-                  <p>Modified: {qr.updatedAt}</p>
+                  <p>Created: {formatDate(qr.createdAt)}</p>
+                  <p>Modified: {formatDate(qr.updatedAt)}</p>
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2">

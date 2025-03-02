@@ -100,7 +100,7 @@ export default function DashboardSidebar() {
                 <SidebarMenuButton
                   asChild
                   className={cn(
-                    "flex items-center transition-colors hover:bg-primary hover:text-white",
+                    "flex items-center transition-colors hover:bg-primary hover:text-white active:bg-primary active:text-white",
                     pathname === item.url
                       ? "bg-primary text-white hover:bg-primary hover:text-white"
                       : ""
@@ -120,7 +120,7 @@ export default function DashboardSidebar() {
           <SidebarMenu>
             {data.userNav.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white">
+                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white active:bg-primary active:text-white">
                   <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
@@ -135,7 +135,7 @@ export default function DashboardSidebar() {
           <SidebarMenu>
             {data.extraNav.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white">
+                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white active:bg-primary active:text-white">
                   <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
