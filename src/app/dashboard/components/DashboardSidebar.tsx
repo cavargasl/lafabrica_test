@@ -83,11 +83,11 @@ export default function DashboardSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader
         className={cn(
-          "flex items-center justify-center",
+          "flex items-center justify-center h-16 py-4",
           state === "expanded" && "items-start"
         )}
       >
-        <Logo showText={true} />
+        <Logo showText={state === "expanded"} />
       </SidebarHeader>
       <SidebarContent>
         <Separator />
@@ -111,7 +111,7 @@ export default function DashboardSidebar() {
             {data.userNav.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <Link href={item.url}>
+                  <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
                   </Link>
@@ -126,7 +126,7 @@ export default function DashboardSidebar() {
             {data.extraNav.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <Link href={item.url}>
+                  <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
                   </Link>

@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";
 import DashboardSidebar from "./components/DashboardSidebar";
 
@@ -10,10 +10,7 @@ export default function LayoutDashboard({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <main className="flex-1 px-4 py-4">{children}</main>
     </SidebarProvider>
   );
 }
