@@ -1,6 +1,11 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";
 import DashboardSidebar from "./components/DashboardSidebar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 export default function LayoutDashboard({
   children,
