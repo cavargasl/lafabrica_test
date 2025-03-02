@@ -21,11 +21,11 @@ export default function MyQRPage() {
       <DashboardHeader heading="My QR Codes">
         <div className="flex gap-2">
           <Button variant="outline">
-            <FolderPlus className="md:mr-2 h-4 w-4" />
+            <FolderPlus className="h-4 w-4" />
             <span className="hidden md:block">New Folder</span>
           </Button>
           <Button>
-            <Plus className="md:mr-2 h-4 w-4" />
+            <Plus className="h-4 w-4" />
             <span className="hidden md:block">Create New QR Code</span>
           </Button>
         </div>

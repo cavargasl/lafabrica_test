@@ -24,6 +24,7 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import { NavUser } from "./NavUser";
 
@@ -31,7 +32,7 @@ const data = {
   mainNav: [
     {
       title: "Create new QR Code",
-      url: "#",
+      url: "/dashboard/qr-code",
       icon: Plus,
     },
     {
@@ -78,6 +79,7 @@ const data = {
 export default function DashboardSidebar() {
   const { state } = useSidebar();
   const user = useSelector(selectUser);
+  const pathname = usePathname();
 
   return (
     <Sidebar collapsible="icon">
@@ -95,11 +97,19 @@ export default function DashboardSidebar() {
           <SidebarMenu>
             {data.mainNav.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                <SidebarMenuButton
+                  asChild
+                  className={cn(
+                    "flex items-center transition-colors hover:bg-primary hover:text-white",
+                    pathname === item.url
+                      ? "bg-primary text-white hover:bg-primary hover:text-white"
+                      : ""
+                  )}
+                >
+                  <Link href={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -110,7 +120,7 @@ export default function DashboardSidebar() {
           <SidebarMenu>
             {data.userNav.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white">
                   <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
@@ -125,7 +135,7 @@ export default function DashboardSidebar() {
           <SidebarMenu>
             {data.extraNav.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild className="transition-colors hover:bg-primary hover:text-white">
                   <Link href={item.url} aria-disabled={item.disabled}>
                     <item.icon />
                     <span>{item.title}</span>
