@@ -20,6 +20,7 @@ import { DashboardShell } from "../components/DashboardShell";
 import CreateFolder from "./components/CreateFolder";
 import FolderSection from "./components/FolderSection";
 import QRList from "./components/QRList";
+import { Label } from "@/components/ui/label";
 
 const qrCodeService = QRCodeService(FirebaseQrCodeRepository);
 export default async function MyQRPage() {
@@ -69,11 +70,11 @@ export default async function MyQRPage() {
       <div className="grid gap-4 md:grid-cols-5">
         <div className="space-y-2">
           <label className="text-sm font-medium">My QR Codes</label>
-          <Input type="search" placeholder="Search..." />
+          <Input type="search" placeholder="Search..." disabled />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">QR Code Status</label>
-          <Select defaultValue="active">
+          <Select defaultValue="active" disabled>
             <SelectTrigger>
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
@@ -85,7 +86,7 @@ export default async function MyQRPage() {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">QR Code Type</label>
-          <Select defaultValue="selected">
+          <Select defaultValue="selected" disabled>
             <SelectTrigger>
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
@@ -97,7 +98,7 @@ export default async function MyQRPage() {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">Sort by</label>
-          <Select defaultValue="recent">
+          <Select defaultValue="recent" disabled>
             <SelectTrigger>
               <SelectValue placeholder="Select order" />
             </SelectTrigger>
@@ -110,7 +111,7 @@ export default async function MyQRPage() {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">Number of QRs per page</label>
-          <Select defaultValue="10">
+          <Select defaultValue="10" disabled>
             <SelectTrigger>
               <SelectValue placeholder="Select amount" />
             </SelectTrigger>
@@ -125,13 +126,13 @@ export default async function MyQRPage() {
 
       {/* Select All */}
       <div className="flex items-center space-x-2">
-        <Checkbox id="selectAll" />
-        <label
+        <Checkbox id="selectAll" disabled />
+        <Label
           htmlFor="selectAll"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           Select All
-        </label>
+        </Label>
       </div>
 
       {/* QR Codes List */}
