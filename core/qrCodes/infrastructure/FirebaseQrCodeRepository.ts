@@ -19,7 +19,7 @@ export const FirebaseQrCodeRepository: IQRCodeRepository = {
     if(qrCodeData.folder === undefined) {
       delete qrCodeData.folder;
     }
-    const qrCode: Omit<IQRCode, "id"> = { createdAt, updatedAt, ...qrCodeData, scans: 0 };
+    const qrCode: Omit<IQRCode, "id"> = { createdAt, updatedAt, ...qrCodeData };
 
     const docRef = await addDoc(collection(db, "qrCodes"), qrCode);
     return { id: docRef.id, ...qrCode };

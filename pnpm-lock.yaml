@@ -8,6 +8,9 @@ dependencies:
   '@clerk/nextjs':
     specifier: ^6.12.2
     version: 6.12.2(next@15.2.0)(react-dom@19.0.0)(react@19.0.0)
+  '@hookform/resolvers':
+    specifier: ^4.1.2
+    version: 4.1.2(react-hook-form@7.54.2)
   '@radix-ui/react-avatar':
     specifier: ^1.1.3
     version: 1.1.3(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.0.0)(react@19.0.0)
@@ -813,6 +816,15 @@ packages:
       long: 5.3.1
       protobufjs: 7.4.0
       yargs: 17.7.2
+    dev: false
+
+  /@hookform/resolvers@4.1.2(react-hook-form@7.54.2):
+    resolution: {integrity: sha512-wl6H9c9wLOZMJAqGLEVKzbCkxJuV+BYuLFZFCQtCwMe0b3qQk4kUBd/ZAj13SwcSqcx86rCgSCyngQfmA6DOWg==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.54.2(react@19.0.0)
     dev: false
 
   /@humanfs/core@0.19.1:
@@ -1927,6 +1939,10 @@ packages:
   /@rushstack/eslint-patch@1.10.5:
     resolution: {integrity: sha512-kkKUDVlII2DQiKy7UstOR1ErJP8kUKAQ4oa+SQtM0K+lPdmmjj0YnnxBgtTVYH7mUKtbsxeFC9y0AmK7Yb78/A==}
     dev: true
+
+  /@standard-schema/utils@0.3.0:
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
+    dev: false
 
   /@swc/counter@0.1.3:
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}

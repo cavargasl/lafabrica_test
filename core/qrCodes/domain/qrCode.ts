@@ -8,6 +8,6 @@ export interface IQRCode {
   updatedAt: string;
   type: "url" | "text" | "email" | "phone" | "location" | "wifi" | "event" | "product" | "other";
   folder?: string;
-  imageUrl: string;  
+  imageUrl?: string;  
   scans: number;
 }

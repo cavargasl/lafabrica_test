@@ -19,21 +19,32 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface CreateFolderProps {
   children: React.ReactNode;
 }
 
-interface FormValues {
-  folderName: string;
-}
+const folderSchema = z.object({
+  folderName: z.string()
+    .min(1, "The folder name is required")
+    .max(50, "The folder name cannot exceed 50 characters")
+    .refine(name => /^[a-zA-Z0-9\s-_]+$/.test(name), {
+      message: "Only letters, numbers, spaces, hyphens and underscores are allowed"
+    })
+});
+
+type FormValues = z.infer<typeof folderSchema>;
 
 export default function CreateFolder({ children }: CreateFolderProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    resolver: zodResolver(folderSchema)
+  });
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [loading, setLoading] = useState(false);
@@ -86,7 +97,7 @@ export default function CreateFolder({ children }: CreateFolderProps) {
             {...register("folderName", { required: true })}
           />
           {errors.folderName && (
-            <p className="text-destructive">Folder name is required</p>
+            <p className="text-destructive">{errors.folderName.message}</p>
           )}
         </div>
         </form>
