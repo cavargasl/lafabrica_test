@@ -12,23 +12,19 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UserService } from "@/core/auth/application/UserService";
 import { IUserSignIn } from "@/core/auth/domain/User";
-import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
-import { setUser } from "@/store/slices/userSlice";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const SignInPage = () => {
   const [isGuest, setIsGuest] = useState(false);
   const { register, handleSubmit } = useForm<IUserSignIn>();
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const router = useRouter();
 
   const handleGuestCheck = () => {
@@ -37,19 +33,20 @@ const SignInPage = () => {
 
   const onSubmit = async (data: IUserSignIn) => {
     setLoading(true);
+    console.log(data);
     try {
       if (isGuest) {
-        const fakeUser = {
+        /* const fakeUser = {
           id: "guest",
           email: "guest@example.com",
           name: "Guest User",
         };
-        dispatch(setUser(fakeUser));
+        dispatch(setUser(fakeUser)); */
         router.push("/dashboard");
       } else {
-        const userService = UserService(FirebaseUserRepository());
+        /* const userService = UserService(FirebaseUserRepository());
         const user = await userService.signInWithEmailAndPassword(data);
-        dispatch(setUser(user));
+        dispatch(setUser(user)); */
         router.push("/dashboard");
       }
     } catch (error) {
@@ -63,9 +60,9 @@ const SignInPage = () => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const userService = UserService(FirebaseUserRepository());
+      /* const userService = UserService(FirebaseUserRepository());
       const user = await userService.signInWithGoogle();
-      dispatch(setUser(user));
+      dispatch(setUser(user)); */
       router.push("/dashboard");
     } catch (error) {
       console.error("Error to sign in with Google:", error);
@@ -139,8 +136,10 @@ const SignInPage = () => {
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Loading
                   </>
+                ) : isGuest ? (
+                  "Sign in as guest"
                 ) : (
-                  isGuest ? "Sign in as guest" : "Sign In with email"
+                  "Sign In with email"
                 )}
               </Button>
             </div>
@@ -155,7 +154,12 @@ const SignInPage = () => {
               </span>
             </div>
           </div>
-          <Button variant="outline" type="button" onClick={handleGoogleSignIn} disabled={loading}>
+          <Button
+            variant="outline"
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
             {loading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (

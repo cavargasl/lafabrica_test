@@ -1,8 +1,7 @@
 "use client";
 
-import type React from "react";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
@@ -16,28 +15,26 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { IUserCreate } from "@/core/auth/domain/User";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FirebaseUserRepository } from "@/core/auth/infrastructure/FirebaseUserRepository";
-import { UserService } from "@/core/auth/application/UserService";
-import { IUserCreate } from "@/core/auth/domain/User";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/store/slices/userSlice";
-import { toast } from "sonner"
-import { Loader2 } from "lucide-react";
+//import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm<IUserCreate>({});
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: { email: string; password: string; name: string }) => {
     setLoading(true);
     try {
-      const userService = UserService(FirebaseUserRepository());
+      console.log(data);
+      /* const userService = UserService(FirebaseUserRepository());
       const user = await userService.createUserWithEmailAndPassword(data);
-      dispatch(setUser(user));
+      dispatch(setUser(user)); */
       router.push("/dashboard");
     } catch (error) {
       console.error("Error to create user:", error);
@@ -50,9 +47,9 @@ export default function SignUpPage() {
   const handleGoogleSignUp = async () => {
     setLoading(true);
     try {
-      const userService = UserService(FirebaseUserRepository());
+      /* const userService = UserService(FirebaseUserRepository());
       const user = await userService.signInWithGoogle();
-      dispatch(setUser(user));
+      dispatch(setUser(user)); */
       router.push("/dashboard");
     } catch (error) {
       console.error("Error to sign in with Google:", error);
