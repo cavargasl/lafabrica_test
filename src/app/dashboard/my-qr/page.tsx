@@ -13,12 +13,13 @@ import { QRCodeService } from "@/core/qrCodes/application/qrCodeService";
 import { FirebaseQrCodeRepository } from "@/core/qrCodes/infrastructure/FirebaseQrCodeRepository";
 import { auth } from "@clerk/nextjs/server";
 import { FolderPlus, Plus } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { DashboardHeader } from "../components/DashboardHeader";
 import { DashboardShell } from "../components/DashboardShell";
+import CreateFolder from "./components/CreateFolder";
 import FolderSection from "./components/FolderSection";
 import QRList from "./components/QRList";
-import Link from "next/link";
 
 const qrCodeService = QRCodeService(FirebaseQrCodeRepository);
 export default async function MyQRPage() {
@@ -48,20 +49,18 @@ export default async function MyQRPage() {
     <DashboardShell>
       <DashboardHeader heading="My QR Codes">
         <div className="flex gap-2">
-          <Button variant="outline">
-            <FolderPlus className="h-4 w-4" />
-            <span className="hidden md:block">New Folder</span>
-          </Button>
-          <Link
-            href="/dashboard/qr-code"
-            className={buttonVariants()}
-          >
+          <CreateFolder>
+            <Button variant="outline">
+              <FolderPlus className="h-4 w-4" />
+              <span className="hidden md:block">New Folder</span>
+            </Button>
+          </CreateFolder>
+          <Link href="/dashboard/qr-code" className={buttonVariants()}>
             <Plus className="h-4 w-4" />
             <span className="hidden md:block">Create New QR Code</span>
           </Link>
         </div>
       </DashboardHeader>
-
       <div className="space-y-8">
         <FolderSection />
       </div>

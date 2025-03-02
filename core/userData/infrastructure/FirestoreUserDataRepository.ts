@@ -12,7 +12,7 @@ import { IUserData } from "../domain/userData";
 import { IUserDataRepository } from "../domain/userDataRepository";
 
 export const FirestoreUserDataRepository: IUserDataRepository = {
-  getUserData: async (userId: string) => {
+  getUserData: async (userId) => {
     const userCollection = collection(db, "users");
     const q = query(userCollection, where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
@@ -24,16 +24,15 @@ export const FirestoreUserDataRepository: IUserDataRepository = {
     const userData = querySnapshot.docs[0].data() as IUserData;
     return userData;
   },
-  createUserData: async (userData: IUserData) => {
+  createUserData: async (userData) => {
     const userCollection = collection(db, "users");
     const userDocRef = await doc(userCollection, userData.userId);
     await setDoc(userDocRef, { ...userData });
     return { ...userData };
   },
-  updateUserData: async (userData: IUserData) => {
+  updateUserData: async ({ userId, userData }) => {
     const userCollection = collection(db, "users");
-    const userDoc = doc(userCollection, userData.userId);
+    const userDoc = doc(userCollection, userId);
     await updateDoc(userDoc, { ...userData });
-    return userData;
   },
 };
