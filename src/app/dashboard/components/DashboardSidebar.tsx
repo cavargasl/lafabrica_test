@@ -36,12 +36,12 @@ const data = {
     },
     {
       title: "Analytics",
-      url: "#",
+      url: "/dashboard/analytics",
       icon: ChartNoAxesCombined,
     },
     {
       title: "My QR Codes",
-      url: "#",
+      url: "/dashboard/my-qr",
       icon: QrCode,
     },
   ],
