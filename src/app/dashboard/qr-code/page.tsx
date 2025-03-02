@@ -14,7 +14,7 @@ import { IQRCode } from "@/core/qrCodes/domain/qrCode";
 import { FirebaseQrCodeRepository } from "@/core/qrCodes/infrastructure/FirebaseQrCodeRepository";
 import { selectUser } from "@/store/slices/userSlice";
 import { useUser } from "@clerk/nextjs";
-import { FolderArchive } from "lucide-react";
+import { FolderArchive, Link, FileText, Mail, Phone, MapPin, Wifi, Calendar, ShoppingBag, MoreHorizontal } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { DashboardHeader } from "../components/DashboardHeader";
@@ -22,6 +22,18 @@ import { DashboardShell } from "../components/DashboardShell";
 import { toast } from "sonner";
 
 const qrCodeService = QRCodeService(FirebaseQrCodeRepository);
+
+const qrCodeTypes: { value: IQRCode["type"]; label: string; icon: React.ElementType }[] = [
+  { value: "url", label: "URL", icon: Link },
+  { value: "text", label: "Text", icon: FileText },
+  { value: "email", label: "Email", icon: Mail },
+  { value: "phone", label: "Phone", icon: Phone },
+  { value: "location", label: "Location", icon: MapPin },
+  { value: "wifi", label: "WiFi", icon: Wifi },
+  { value: "event", label: "Event", icon: Calendar },
+  { value: "product", label: "Product", icon: ShoppingBag },
+  { value: "other", label: "Other", icon: MoreHorizontal },
+];
 
 export default function CreateQRCodePage() {
   const {
@@ -60,7 +72,7 @@ export default function CreateQRCodePage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Create New QR Code"></DashboardHeader>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-2xl mx-auto">
         <div>
           <Label>Name:</Label>
           <Input {...register("name", { required: true })} />
@@ -87,15 +99,14 @@ export default function CreateQRCodePage() {
               <SelectValue placeholder="Select a type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="url">URL</SelectItem>
-              <SelectItem value="text">Text</SelectItem>
-              <SelectItem value="email">Email</SelectItem>
-              <SelectItem value="phone">Phone</SelectItem>
-              <SelectItem value="location">Location</SelectItem>
-              <SelectItem value="wifi">WiFi</SelectItem>
-              <SelectItem value="event">Event</SelectItem>
-              <SelectItem value="product">Product</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
+              {qrCodeTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  <div className="flex items-center gap-2">
+                    <type.icon className="h-4 w-4" />
+                    <span>{type.label}</span>
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {errors.type && <span>This field is required</span>}
