@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/dashboard",
-        destination: "/dashboard/analytics",
+        destination: "/dashboard/my-qr",
         permanent: true,
       },
     ];

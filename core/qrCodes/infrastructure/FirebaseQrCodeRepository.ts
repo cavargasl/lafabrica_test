@@ -18,7 +18,7 @@ export const FirebaseQrCodeRepository: IQRCodeRepository = {
     const qrCode: Omit<IQRCode, "id"> = { createdAt, updatedAt, ...qrCodeData };
 
     const docRef = await addDoc(collection(db, "qrCodes"), qrCode);
-    return { id: docRef.id, ...qrCode };
+    return { id: docRef.id, ...qrCode, scans: 0 };
   },
 
   getAllQRCodeByUserId: async (userId: string): Promise<IQRCode[]> => {

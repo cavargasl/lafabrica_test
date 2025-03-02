@@ -7,6 +7,7 @@ export interface IQRCode {
   createdAt: string;
   updatedAt: string;
   type: "url" | "text" | "email" | "phone" | "location" | "wifi" | "event" | "product" | "other";
-  folderId: string;
+  folder?: string;
   imageUrl: string;  
+  scans: number;
 }

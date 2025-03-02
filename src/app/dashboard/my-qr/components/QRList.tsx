@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { IQRCode } from "@/core/qrCodes/domain/qrCode";
 import {
   Copy,
   Download,
@@ -17,20 +18,21 @@ import {
   MoreHorizontal,
   QrCode,
 } from "lucide-react";
+import Link from "next/link";
 
-const qrCodes = [
+const qrCodes: IQRCode[] = [
   {
-    id: 1,
-    type: "WEBSITE",
-    title: "Portfolio",
-    created: "Mar 1, 2025",
-    modified: "Mar 2, 2025",
+    id: "test_id_1",
+    type: "url",
+    name: "Portfolio",
+    createdAt: "Mar 1, 2025",
+    updatedAt: "Mar 2, 2025",
+    userId: "test_user_id_1",
+    description: "Portfolio description",
+    data: "https://qrweb.co/ox9u",
+    imageUrl: "https://qrweb.co/ox9u",
     scans: 0,
-    urls: [
-      "https://qrweb.co/ox9u",
-      "https://portfolio-camilovargas.vercel.app",
-    ],
-    folder: null,
+    folder: undefined,
   },
 ];
 
@@ -46,30 +48,30 @@ export default function QRList() {
           <div className="h-24 w-24 bg-muted rounded-lg flex items-center justify-center">
             <QrCode className="h-16 w-16 text-muted-foreground" />
           </div>
-          <div className="flex-1 min-w-0 justify-center">
-            <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+          <div className="w-full">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-blue-500" />
-                  <span className="text-xs font-medium text-blue-500">
+                  <Globe className="h-4 w-4" />
+                  <span className="text-xs font-medium uppercase">
                     {qr.type}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold">{qr.title}</h3>
-                  <button className="hover:text-primary">
+                  <h3 className="font-semibold">{qr.name}</h3>
+                  <Button variant="outline" size="icon">
                     <Edit2 className="h-4 w-4" />
-                  </button>
+                  </Button>
                 </div>
                 <div className="space-y-1 text-sm text-muted-foreground">
-                  <p>Created: {qr.created}</p>
-                  <p>Modified: {qr.modified}</p>
+                  <p>Created: {qr.createdAt}</p>
+                  <p>Modified: {qr.updatedAt}</p>
                 </div>
               </div>
-              <div className="flex flex-col items-end gap-2">
-                <div className="text-center">
+              <div className="flex flex-col items-center gap-2">
+                <div className="text-sm text-muted-foreground">Scans</div>
+                <div className="text-center bg-blue-300 rounded-full p-2 w-12 h-12 flex items-center justify-center">
                   <div className="text-2xl font-bold">{qr.scans}</div>
-                  <div className="text-sm text-muted-foreground">Scans</div>
                 </div>
               </div>
             </div>
@@ -77,50 +79,53 @@ export default function QRList() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-2">
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="text-muted-foreground">No folder</span>
+                  {qr.folder && qr.folder.trim() !== "" ? (
+                    <span className="text-muted-foreground">{qr.folder}</span>
+                  ) : (
+                    <span className="text-muted-foreground">No folder</span>
+                  )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  {qr.urls.map((url, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <a
-                        href={url}
-                        className="text-sm text-primary hover:underline truncate max-w-md"
-                      >
-                        {url}
-                      </a>
-                      <button className="hover:text-primary">
-                        <Copy className="h-4 w-4" />
-                      </button>
-                      <button className="hover:text-primary">
-                        <ExternalLink className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={qr.data}
+                      className="text-sm text-primary hover:underline truncate max-w-md"
+                    >
+                      {qr.data}
+                    </Link>
+                    <Button variant="outline" size="icon">
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                    <Button variant="outline" size="icon">
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2 mt-2 sm:mt-0">
-                <Button variant="outline">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download
-                </Button>
-                <Button variant="outline">Detail</Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                    <DropdownMenuItem>Share</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-destructive">
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+            </div>
+            <Separator className="my-4" />
+            <div className="flex items-center gap-2 mt-2 sm:mt-0 justify-center md:justify-start">
+              <Button variant="outline">
+                <Download className="mr-2 h-4 w-4" />
+                Download
+              </Button>
+              <Button variant="outline">Detail</Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                  <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                  <DropdownMenuItem>Share</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-destructive">
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

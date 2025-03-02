@@ -164,7 +164,7 @@ export default async function LandingPage() {
                 </p>
               </div>
             </div>
-            <div className=" grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
+            <div className="grid mx-auto max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
