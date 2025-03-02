@@ -68,7 +68,7 @@ export default function QRList({ qrCodes }: QRListProps) {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   {qr.folder && qr.folder.trim() !== "" ? (
-                    <span className="text-muted-foreground">{qr.folder}</span>
+                    <span className="text-muted-foreground capitalize">{qr.folder}</span>
                   ) : (
                     <span className="text-muted-foreground">No folder</span>
                   )}

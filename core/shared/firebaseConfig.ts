@@ -1,7 +1,7 @@
 import { env } from "@/config/env.mjs";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, setDoc, getDocs, query, where, doc, addDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, setDoc, getDocs, query, where, doc, addDoc, updateDoc, orderBy} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,4 +16,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { db, collection, setDoc, getDocs, query, where, doc, addDoc, updateDoc };
+export { db, collection, setDoc, getDocs, query, where, doc, addDoc, updateDoc, orderBy };
